@@ -63,6 +63,7 @@ export class MyResponsibilitiesViewComponent implements OnInit {
     this.navItems = this.myResponsibilitiesRegistryService
       .getNavItems(systemInfo.PreProps, features, config)
       .filter((elem) => elem.name === 'identities' || elem.name === 'devices' || userConfig.Ownerships.find(own => own.TableName === elem.name)?.Count > 0);
+      console.log(this.navItems);
     this.cdref.detectChanges();
   }
 }

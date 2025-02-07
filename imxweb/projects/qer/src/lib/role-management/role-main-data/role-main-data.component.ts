@@ -116,8 +116,8 @@ export class RoleMainDataComponent implements OnInit {
 
   private setCdrs(): void {
        const entity = this.entity.GetEntity();
-    this.properties = this.cdrfactoryService.buildCdrFromColumnList(entity,this.editableFields);
- 
+    this.properties = this.cdrfactoryService.buildCdrFromColumnList(entity,this.editableFields,true);
+    //this.properties.forEach(cdr=>{cdr.isReadOnly=()=>true})
   }
 
   public async openCompareSidesheet(): Promise<void> {

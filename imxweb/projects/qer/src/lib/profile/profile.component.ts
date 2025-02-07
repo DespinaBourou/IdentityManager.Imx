@@ -235,6 +235,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       if (this.columns == null) {
         this.columns = (await this.projectConfig.getConfig()).PersonConfig.VI_PersonalData_Fields;
       }
+      console.log('this.columns is',this.columns);
 
       if (this.identities == null) {
         this.identities = (await this.person.getMasterdata()).Data.map(item => item.GetEntity());
@@ -242,14 +243,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
       this.selectedIdentity = (await this.person.getMasterdataInteractive(userUid)).Data[0].GetEntity();
 
-      this.cdrList = (this.columns ?? []).map(columnName => {
+      this.cdrList = (this.columns ?? []).filter(columnName=>columnName!='Fax').map(columnName => {
+        let isReadOnlyVal: boolean;
+        if(columnName=='JPegPhoto'){
+          isReadOnlyVal=false;
+        }else{
+          isReadOnlyVal=true;
+        }
         const column = this.selectedIdentity.GetColumn(columnName);
         return {
           column,
-          isReadOnly: () => !column.GetMetadata().CanEdit(),
+          isReadOnly: () => isReadOnlyVal, //!column.GetMetadata().CanEdit(),
           hint: this.hints[columnName]
         };
       });
+      console.log('this.cdrList is',this.cdrList);
 
       this.mailInfo = await this.mailSvc.getMailsThatCanBeUnsubscribed(userUid);
       this.hasMailSubscriptions = this.mailInfo.length > 0;
