@@ -1,0 +1,71 @@
+<table mat-table [dataSource]="employeesDataArray"> 
+
+ 
+
+    <ng-container matColumnDef="filtersearch" > 
+
+        <th mat-header-cell *matHeaderCellDef colspan="6" class="filtersearch"> 
+
+            <mat-form-field appearance="outline" class="inputbox" [style.width.%]="100"> 
+
+                <mat-label> Search</mat-label> 
+
+                <input matInput (keyup)="filter($event)" class="inputsearch"> 
+
+            </mat-form-field> 
+
+        </th> 
+
+    </ng-container> 
+
+ 
+
+ 
+
+    <ng container [matColumnDef]="column" *ngFor="let column of displayedColumns"> 
+
+        <th mat-header-cell *matHeaderCellDef> {{column}} </th> 
+
+        <td mat-cell *matCellDef="let empl">{{empl[column]}}</td> <!-- let empl represents the current row data, ie an object in the array --> 
+
+    </ng> 
+
+ 
+
+    <tr mat-header-row *matHeaderRowDef="['filtersearch']"></tr> 
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> <!-- mat-header-row represents the table header row, 
+
+     *matHeaderRoDef="displayedColumns" defines which columns appear in the header row . Displays <mat-header-cell> elements inside it--> 
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></tr> <!-- mat-row represents each data row in the table, 
+
+     *matRowDef="let row; columns: displayedColumns" iterates over dataSource and generates rows dynamically. Displayes <mat-cell> elements inside it--> 
+
+ 
+
+    
+
+</table> 
+
+ 
+
+<mat-paginator [pageSize]="pageSize" 
+
+                [pageSizeOptions]="pageSizeOptions" 
+
+                ></mat-paginator> 
+
+
+<!-- alternative without *ngFor
+ <ng container matColumnDef="FirstName"> 
+
+        <th mat-header-cell *matHeaderCellDef> FirstName </th> // matHeaderCellDef structural directive defines how to display the header of a given column, equals to the column keys ie the elements of displayedColumns array(->same is used in matHeaderRowDef=its
+        this array that determines the visual order of the columns)
+        //values of displayedColumns are the column keys, which need to be identical to the names of the ng-container column sections specified via the matColumnDef directive
+
+        <td mat-cell *matCellDef = "let empl"> {{empl.FirstName}}</td> //this template defines how to display the cells of a given column using the matCellDef structural directive, let empl represents the current row data ie an object in the array
+
+    </ng>
+and same for the rest
+-->

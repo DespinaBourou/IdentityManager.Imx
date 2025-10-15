@@ -113,6 +113,7 @@ export class NewRequestProductComponent implements OnInit, OnDestroy {
         userParams.ParentKey = undefined;
       }
       const servicecategories = await this.categoryApi.get(userParams);
+      console.log(servicecategories);
       this.serviceCategoriesTotalCount = servicecategories?.totalCount;
       const dstSettings: DataSourceToolbarSettings = {
         dataSource: servicecategories,
@@ -351,6 +352,7 @@ export class NewRequestProductComponent implements OnInit, OnDestroy {
           firstIteration = false;
         } else {
           this.dynamicDataSource.setup(true);
+          console.log('datasource is',this.dynamicDataSource);
           this.getProductData(true);
         }
       })

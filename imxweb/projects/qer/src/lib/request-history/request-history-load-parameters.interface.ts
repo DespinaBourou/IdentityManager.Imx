@@ -24,7 +24,7 @@
  *
  */
 
-import { CollectionLoadParameters } from 'imx-qbm-dbts';
+import { CollectionLoadParameters } from 'imx-qbm-dbts'; 
 
 export interface RequestHistoryLoadParameters extends CollectionLoadParameters {
   DocumentNumber?: string;
@@ -34,6 +34,7 @@ export interface RequestHistoryLoadParameters extends CollectionLoadParameters {
   ShowMyPending?: string;
   ShowEndingSoon?: string;
   person?: string;
+  status?: string;
 }
 
 export interface ArchivedRequestHistoryLoadParameters {

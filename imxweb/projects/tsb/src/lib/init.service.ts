@@ -195,12 +195,12 @@ export class InitService {
           title: '#LDS#Responsibilities',
           sorting: '30',
           items: [
-            {
-              id: 'QER_Responsibilities_AssignOwnership',
-              route: 'claimgroup',
-              title: '#LDS#Menu Entry System entitlement ownership',
-              sorting: '30-20',
-            },
+            // {
+            //   id: 'QER_Responsibilities_AssignOwnership',
+            //   route: 'claimgroup',
+            //   title: '#LDS#Menu Entry System entitlement ownership',
+            //   sorting: '30-20',
+            // },
           ],
         };
       },

@@ -25,7 +25,7 @@
  */
 
 import { Component, Inject, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { EuiLoadingService, EuiSidesheetRef, EUI_SIDESHEET_DATA } from '@elemental-ui/core';
 
 import { TypedEntity, XOrigin } from 'imx-qbm-dbts';
@@ -83,11 +83,18 @@ export class RemoveMembershipComponent implements OnInit {
       deleteDirect: this.formDeleteDirect,
       abortRequested: this.formAbortRequested,
       description: [''],
-      descriptionRequests: [''],
+      descriptionRequests: ['',Validators.required],
     });
   }
 
   public async save(): Promise<void> {
+     if (!this.dynamicExclusionForm.valid) {
+      console.log('form is invalid');
+          this.dynamicExclusionForm.markAllAsTouched(); // optional: highlight errors
+          // this.snackbar.open({key:'Complete all required fields before submitting!'},
+          //   undefined,{duration:0,panelClass:['snack-error']})
+          return;
+        }
     const entity = this.dataManagementService.entityInteractive.GetEntity();
     this.busyService.show();
     try {
@@ -113,16 +120,18 @@ export class RemoveMembershipComponent implements OnInit {
       }
 
       if (this.formAbortRequested.value) {
-        const requested = this.data.selectedEntities
-          .filter((e) => {
-            return e.GetEntity().GetColumn('IsRequestCancellable').GetValue();
-          })
-          .map((e) => e.GetEntity().GetColumn('UID_PersonWantsOrg').GetValue() as string);
+        console.log('PASSED IF,value is',this.formAbortRequested.value,'reason is',this.dynamicExclusionForm.get('descriptionRequests').value);
+       
+          const requested = this.data.selectedEntities
+            .filter((e) => {
+              return e.GetEntity().GetColumn('IsRequestCancellable').GetValue();
+            })
+            .map((e) => e.GetEntity().GetColumn('UID_PersonWantsOrg').GetValue() as string);
 
-        await this.qerApiClient.client.portal_itshop_unsubscribe_post({
-          UidPwo: requested,
-          Reason: this.dynamicExclusionForm.get('descriptionRequests').value || '',
-        });
+          await this.qerApiClient.client.portal_itshop_unsubscribe_post({
+            UidPwo: requested,
+            Reason: this.dynamicExclusionForm.get('descriptionRequests').value,
+          });
       }
 
       this.sidesheetRef.close(true);

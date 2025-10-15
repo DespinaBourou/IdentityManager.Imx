@@ -55,6 +55,7 @@ export class NewRequestRecipientsComponent {
 
   public async openSidesheet(): Promise<void> {
     const idList = MultiValue.FromString(this.orchestration.recipients.Column.GetValue()).GetValues();
+    console.log('idlist',idList);
     const response: FKAdvancedPickerResponse = await this.sidesheetService.open(FkAdvancedPickerComponent, {
       title: await this.translateService.get('#LDS#Heading Select Recipients').toPromise(),
       icon: 'user',
@@ -76,6 +77,7 @@ export class NewRequestRecipientsComponent {
         DataValue: this.multiValueProvider.getMultiValue(response.candidates.map((v) => v.DataValue)),
         DisplayValue: this.multiValueProvider.getMultiValue(response.candidates.map((v) => v.DisplayValue)),
       };
+      console.log('recipients',recipients);
       await this.orchestration.setRecipients(recipients);
     }
   }

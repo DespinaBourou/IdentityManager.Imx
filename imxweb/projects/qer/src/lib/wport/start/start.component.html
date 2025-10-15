@@ -1,5 +1,10 @@
-<h2 class="mat-headline">{{ '#LDS#Welcome' | translate }}</h2>
+<eui-alert type="warning" *ngIf="isindepartment && isenabled">
+  <eui-content>
+    {{messagedisplayed}}
+  </eui-content>
+</eui-alert>
 
+<h2 class="mat-headline">{{ '#LDS#Welcome' | translate }} {{firstName}} {{lastName}}</h2>
 <imx-busy-indicator *ngIf="!viewReady"></imx-busy-indicator>
 
 <ng-container>
@@ -33,8 +38,8 @@
       [value]="GetCountInRequestHistory()"
       [identifier]="'request-history'"
       (actionClick)="router.navigate(['requesthistory'], { queryParams: { ShowMyPending: 1 } })"
-    >
-    </imx-badge-tile>
+  >
+  </imx-badge-tile>
 
     <imx-badge-tile
       data-imx-identifier="start-tile-it-shop-approval-inquiries"
@@ -136,7 +141,54 @@
         </button>
       </ng-template>
     </imx-icon-tile>
-    <imx-ext id="Dashboard-MediumTiles"></imx-ext>
+
+    <imx-icon-tile
+    data-imx-identifier="start-tile-goto-support-page"
+    [caption]="'#LDS# Support Page' | translate"
+    [subtitle]="'#LDS#Custom Support Page' | translate"
+    [image]="'contactinfo'"
+    [identifier]="'support-page'"
+    
+  >
+    <ng-template #ActionTemplate>
+      <button mat-button color="primary" [attr.data-imx-identifier]="'imx-start-button-support-page'" (click)="GoToCCCSupport()">
+        <span>{{ '#LDS# Support Page' | translate }}</span>
+        <eui-icon size="m" icon="forward"></eui-icon>
+      </button>
+    </ng-template>
+  </imx-icon-tile>
+
+  <imx-icon-tile 
+
+  data-imx-identifier="start-tile-goto-support-page" 
+
+  [caption]="'#LDS# Support Page' | translate" 
+
+  [subtitle]="'#LDS#Custom Support Page' | translate" 
+
+  [image]="'contactinfo'" 
+
+  [identifier]="'support-page'" 
+
+   
+
+> 
+
+  <!-- <ng-template #ActionTemplate> 
+
+    <button mat-button color="primary" [attr.data-imx-identifier]="'imx-start-button-cccperson-page'" (click)="GoToCCCPersonComp()"> 
+
+      <span>{{ '#LDS#Go to CCC Person Component' | translate }}</span> 
+
+      <eui-icon size="m" icon="forward"></eui-icon> 
+
+    </button> 
+
+  </ng-template>  -->
+
+</imx-icon-tile> 
+
+  <imx-ext id="Dashboard-MediumTiles"></imx-ext>
   </div>
   <div class="imx-flexible-tile-row">
     <imx-businessowner-chartsummary></imx-businessowner-chartsummary>

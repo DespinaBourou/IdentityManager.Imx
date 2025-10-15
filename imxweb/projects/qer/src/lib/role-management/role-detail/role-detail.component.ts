@@ -24,8 +24,8 @@
  *
  */
 
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { EuiLoadingService, EuiSidesheetRef } from '@elemental-ui/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { EUI_SIDESHEET_DATA, EuiLoadingService, EuiSidesheetRef } from '@elemental-ui/core';
 import { IEntity } from 'imx-qbm-dbts';
 import { RoleService } from '../role.service';
 import { ConfirmationService, ExtService, TabItem } from 'qbm';
@@ -43,6 +43,8 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
   public dynamicTabs: TabItem[] = [];
   public parameters: { tablename: string; entity: IEntity };
   public subscriptions$: Subscription[] = [];
+  public testtasktitle: any;
+  public testtaskid: any;
 
   private defaultClickHandler: Function;
   private canClose = true;
@@ -55,8 +57,12 @@ export class RoleDetailComponent implements OnInit, OnDestroy {
     private readonly roleService: RoleService,
     private dataManagementService: DataManagementService,
     private readonly confirm: ConfirmationService,
-    private readonly tabService: ExtService
+    private readonly tabService: ExtService,
+    @Inject (EUI_SIDESHEET_DATA) public sidesheetdata?: any
   ) {
+    this.testtaskid=sidesheetdata[5];
+    this.testtasktitle=sidesheetdata[0];
+    console.log('TESTTASKID AND TESTTASKTITLE ARE',sidesheetdata[5],sidesheetdata[0]);
     this.parameters = {
       tablename: this.roleService.ownershipInfo.TableName,
       entity: this.dataManagementService.entityInteractive.GetEntity(),

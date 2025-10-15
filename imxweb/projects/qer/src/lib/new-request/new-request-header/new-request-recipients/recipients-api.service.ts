@@ -38,6 +38,7 @@ export class RecipientsApiService {
   ) { }
 
   public getFKRelations(): readonly IForeignKeyInfo[] {
+    console.log('fkrelations',this.qerClient.typedClient.PortalCartitem.createEntity().UID_PersonOrdered.GetMetadata().GetFkRelations())
     return this.qerClient.typedClient.PortalCartitem.createEntity().UID_PersonOrdered.GetMetadata().GetFkRelations()
   }
 

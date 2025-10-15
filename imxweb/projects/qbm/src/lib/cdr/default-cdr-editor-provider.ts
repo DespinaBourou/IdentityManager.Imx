@@ -129,6 +129,7 @@ export class DefaultCdrEditorProvider implements CdrEditorProvider {
     parent: ViewContainerRef,
     cdref: ColumnDependentReference,
   ): ComponentRef<CdrEditor> {
+    console.log('editor is',editor);
     const result = parent.createComponent(editor);
     result.instance.bind(cdref);
     return result;

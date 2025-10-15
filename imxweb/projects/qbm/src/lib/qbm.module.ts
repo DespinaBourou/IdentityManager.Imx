@@ -78,6 +78,7 @@ import { ExtComponent } from './ext/ext.component';
 import { ExtDirective } from './ext/ext.directive';
 import { ExtModule } from './ext/ext.module';
 import { ExtService } from './ext/ext.service';
+import { FilterWizardService } from './data-source-toolbar/filter-wizard/filter-wizard.service';
 import { FilterTileComponent } from './filter-tile/filter-tile.component';
 import { HyperViewModule } from './hyperview/hyperview.module';
 import { IconStackComponent } from './icon-stack/icon-stack.component';
@@ -207,6 +208,7 @@ export function initApp(registry: CdrRegistryService, logger: NGXLogger): () => 
     imx_QBM_SearchService,
     SnackBarService,
     ExtService,
+    FilterWizardService,
     DeviceStateService,
     ImxTreeTableComponent,
     TwoFactorAuthenticationService,

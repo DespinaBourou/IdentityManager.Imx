@@ -321,6 +321,7 @@ export class IdentitySidesheetComponent implements OnInit, OnDestroy {
     this.cdrListPersonal = this.cdrFactoryService.buildCdrFromColumnList(this.data.selectedIdentity.GetEntity(), personalColumns, !this.data.canEdit);
 
     const organizationalColumns = this.data.projectConfig.PersonConfig.VI_Employee_MasterData_OrganizationalAttributes;
+    console.log(this.data.selectedIdentity.GetEntity());
     this.cdrListOrganizational = this.cdrFactoryService.buildCdrFromColumnList(
       this.data.selectedIdentity.GetEntity(),
       organizationalColumns, !this.data.canEdit

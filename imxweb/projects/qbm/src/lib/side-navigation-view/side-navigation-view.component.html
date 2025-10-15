@@ -17,9 +17,9 @@
         <div class="snavigation-side-content">
           <div class="snavigation-side-heading">
             <h2 translate>{{ componentTitle }}</h2>
-            <ng-container *ngIf="!!contextId">
+            <!-- <ng-container *ngIf="!!contextId && contextId == 'my-responsibilities-identities'">
               <imx-help-contextual [contextId]="contextId" [size]="'m'"></imx-help-contextual>
-            </ng-container>
+            </ng-container> -->
           </div>
           <ng-container *ngFor="let item of navigationItems">
             <div

@@ -73,6 +73,7 @@ export class FkSelectorComponent implements OnInit {
 
   private readonly builder = new TypedEntityBuilder(CandidateEntity);
   private readonly entitySchema = CandidateEntity.GetEntitySchema();
+ 
   private filters: DataModelFilter[];
   private dataModel: DataModel;
 
@@ -84,7 +85,7 @@ export class FkSelectorComponent implements OnInit {
 
   public async ngOnInit(): Promise<void> {
     const isBusy = this.busyService.beginBusy();
-
+    console.log('candidate',this.entitySchema);
     if (this.data.fkRelations && this.data.fkRelations.length > 0) {
       this.logger.trace(this, 'Pre-select the first candidate table');
       this.selectedTable = this.data.fkRelations.find((fkr) => fkr.TableName === this.data.selectedTableName) || this.data.fkRelations[0];
@@ -194,6 +195,7 @@ export class FkSelectorComponent implements OnInit {
         displayedColumns.push(DisplayColumns.DISPLAY_PROPERTY);
 
         const data = this.builder.buildReadWriteEntities(await this.selectedTable.Get(navigationState), this.entitySchema);
+        console.log('data',data)
         if (data) {
           this.settings = {
             dataSource: data,

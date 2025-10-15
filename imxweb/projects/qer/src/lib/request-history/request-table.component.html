@@ -2,6 +2,7 @@
   <imx-data-source-toolbar
     #dst
     [options]="['search', 'sort', 'filter', 'settings']"
+  
     [settings]="dstSettings"
     (search)="onSearch($event)"
     (navigationStateChanged)="getData($event)"

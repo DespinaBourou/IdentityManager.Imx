@@ -50,6 +50,10 @@ import { DataSourceToolbarSettings } from './data-source-toolbar-settings';
   styleUrls: ['./data-source-paginator.component.scss']
 })
 export class DataSourcePaginatorComponent implements OnChanges, OnDestroy {
+
+
+  @Input() public ptiletomenu: boolean = false;
+
   /**
    * The datasource toolbar component.
    */
@@ -100,6 +104,7 @@ export class DataSourcePaginatorComponent implements OnChanges, OnDestroy {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['dst'] && changes['dst'].currentValue) {
       this.setPaginator();
+      
 
       this.subscriptions.push(this.dst.settingsChanged.subscribe((value: DataSourceToolbarSettings) => {
         this.dst.settings = value;
@@ -114,6 +119,19 @@ export class DataSourcePaginatorComponent implements OnChanges, OnDestroy {
       } else {
         this.isLoading = false;
       }
+    }
+    if(changes['ptiletomenu'] && changes['ptiletomenu'].currentValue){
+      console.log('WILL CHANGE PAGINATOR!',this.paginator.pageSize,this.paginator.pageIndex);
+      if (this.paginator.pageIndex != 0 || this.paginator.pageSize != 2){
+        console.log('PAGINATOR INSIDE IF!',this.paginator.pageSize,this.paginator.pageIndex);
+        this.paginator._changePageSize(20);
+        
+        this.paginator.firstPage();
+
+      }
+      
+      console.log('changed paginator!',this.paginator.pageSize,this.paginator.pageIndex);
+
     }
   }
 
@@ -130,8 +148,10 @@ export class DataSourcePaginatorComponent implements OnChanges, OnDestroy {
    */
   public onPaginatorStateChanged(newState: PageEvent): void {
     if (this.dst && this.dst.settings && this.dst.settings.navigationState) {
+      console.log('INSIDE ONPAGINATORSTATECHANGED');
       this.dst.settings.navigationState.PageSize = newState.pageSize;
       this.dst.settings.navigationState.StartIndex = newState.pageIndex * newState.pageSize;
+      console.log('nastateinsidepaginator is',this.dst.settings.navigationState);
       this.dst.navigationChanged(this.dst.settings.navigationState);
     }
   }

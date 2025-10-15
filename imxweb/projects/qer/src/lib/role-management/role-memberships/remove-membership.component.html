@@ -26,8 +26,11 @@
 
       <div class="beneath-checkbox" *ngIf="formAbortRequested.value">
         <mat-form-field appearance="outline">
-          <input matInput formControlName="descriptionRequests" data-imx-identifier="remove-membership-input-requested-reason">
+          <input matInput formControlName="descriptionRequests" data-imx-identifier="remove-membership-input-requested-reason" required>
           <mat-label translate>#LDS#Reason for unsubscribing the membership</mat-label>
+          <mat-error *ngIf="dynamicExclusionForm.get('descriptionRequests')?.hasError('required')">
+            Reason is required
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -54,7 +57,7 @@
     data-imx-identifier="remove-membership-button-cancel">
     <span translate>#LDS#Close</span>
   </button>
-  <button mat-stroked-button color="warn" *ngIf="data.selectedEntities.length > 0" [disabled]="noneSelected"
+  <button mat-stroked-button color="warn" *ngIf="data.selectedEntities.length > 0" [disabled]="noneSelected "
     (click)="save()" data-imx-identifier="remove-membership-button-save">
     <eui-icon icon="delete"></eui-icon>
     <span translate>#LDS#Remove memberships</span>

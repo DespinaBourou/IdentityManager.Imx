@@ -428,6 +428,7 @@ export class RoleService {
     this.isAdmin = args.isAdmin;
     this.entity = args.entity;
     this.canEdit = args.canEdit;
+    console.log('INSIDE ROLESERVICE',this.entity.TypeName);
   }
 
   public getType(tableName: string, admin: boolean = false): any {

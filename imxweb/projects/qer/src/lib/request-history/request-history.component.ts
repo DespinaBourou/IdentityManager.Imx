@@ -26,7 +26,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { QerPermissionsService } from  '../admin/qer-permissions.service';
-import { HELP_CONTEXTUAL, HelpContextualValues } from 'qbm';
+import { HELP_CONTEXTUAL, HelpContextualValues, imx_SessionService } from 'qbm';
+import { RequestHistoryService } from './request-history.service';
 
 @Component({
   templateUrl: './request-history.component.html',
@@ -36,10 +37,16 @@ export class RequestHistoryComponent implements OnInit {
 
   public auditMode = false;
   contextId: HelpContextualValues;
+  
+  public uidrecipientnrequester: string;
 
   constructor(
     private readonly qerPermissionService: QerPermissionsService,
+    private readonly session: imx_SessionService,
+    private HistoryService: RequestHistoryService
   ) {}
+
+  
 
   public async ngOnInit(): Promise<void> {
     this.auditMode = await this.qerPermissionService.isShopStatistics();
@@ -48,6 +55,9 @@ export class RequestHistoryComponent implements OnInit {
     }else{
       this.contextId = HELP_CONTEXTUAL.RequestHistory;
     }
+    this.uidrecipientnrequester=(await this.session.getSessionState()).UserUid;
+    const AERoles = await this.HistoryService.getAERoleMemberships(this.uidrecipientnrequester);
+    console.log('AERoles are',AERoles);
     
   }
 }

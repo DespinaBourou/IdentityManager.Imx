@@ -37,6 +37,7 @@ export class CustomThemeService {
   ) { }
 
   public initialize(): void {
+    console.log('INSIDE INITIALIZE');
     this.config.initializedSubject.subscribe(async () => {
       await this.loadThemes();
     });
@@ -44,7 +45,9 @@ export class CustomThemeService {
 
   public async loadThemes(): Promise<void> {
     // load custom theme information from server
+    console.log('INSIDE LOADTHEMES');
     const customThemes = await this.config.client.imx_themes_get();
+    console.log('api returned',customThemes);
 
     // for each custom theme, load the CSS and add it to the head
     const head = this.document.getElementsByTagName('head')[0];

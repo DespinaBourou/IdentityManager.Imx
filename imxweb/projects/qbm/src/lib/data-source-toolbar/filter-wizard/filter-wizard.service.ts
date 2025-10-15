@@ -51,10 +51,12 @@ export class FilterWizardService {
   }
 
   public applyFilters(): void {
+    console.log('INSIDE APPLYFILTERS OF FILTERSERVICE');
     this.applyFiltersEvent.emit();
   }
 
   public clearFilters(): void {
+    console.log('INSIDE CLEARFILTERS OF FILTERSERVICE');
     this.clearFiltersEvent.emit();
   }
 

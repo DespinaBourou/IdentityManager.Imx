@@ -109,6 +109,7 @@ export class CdrEditorComponent implements OnChanges {
     if (changes['cdr'] && changes['cdr'].currentValue) {
       this.viewContainerRef.clear();
       try {
+        console.log('this.cdr is',this.cdr);
         const ref = this.registry.createEditor(this.viewContainerRef, this.cdr);
         this.isReadonly = this.cdr.isReadOnly();
         if (ref.instance.valueHasChanged) {

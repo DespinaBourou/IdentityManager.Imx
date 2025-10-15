@@ -23,7 +23,15 @@
       "aob": ["dist/aob"],
       "aob/*": ["dist/aob/*"],
       "tsb": ["dist/tsb"],
-      "tsb/*": ["dist/tsb/*"],
+      "tsb/*": [
+        "dist/tsb/*"
+      ],
+      "ex2-plugin": [
+        "dist/ex2-plugin"
+      ],
+      "ex2-plugin/*": [
+        "dist/ex2-plugin/*"
+      ],
       "att": ["dist/att"],
       "att/*": ["dist/att/*"],
       "rps": ["dist/rps"],

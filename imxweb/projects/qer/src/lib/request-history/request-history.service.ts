@@ -33,6 +33,8 @@ import {
   MethodDescriptor,
   EntityCollectionData,
   MethodDefinition,
+  CollectionLoadParameters,
+  GroupInfoData
 } from 'imx-qbm-dbts';
 import { ArchivedRequestHistoryLoadParameters, RequestHistoryLoadParameters } from './request-history-load-parameters.interface';
 import {
@@ -47,14 +49,14 @@ import {
 import { ItshopRequest } from './itshop-request';
 import { ItshopRequestData } from '../itshop/request-info/itshop-request-data';
 import { QerApiService } from '../qer-api-client.service';
-import { DataSourceToolbarExportMethod, DataSourceToolbarFilter } from 'qbm';
+import { AppConfigService, DataSourceToolbarExportMethod, DataSourceToolbarFilter } from 'qbm';
 import { ItshopRequestService } from '../itshop/itshop-request.service';
 
 @Injectable()
 export class RequestHistoryService {
   public abortController = new AbortController();
 
-  constructor(private readonly qerClient: QerApiService, private readonly itshopRequest: ItshopRequestService) {}
+  constructor(private readonly config: AppConfigService,private readonly qerClient: QerApiService, private readonly itshopRequest: ItshopRequestService) {}
 
   public get PortalItshopRequestsSchema(): EntitySchema {
     return this.qerClient.typedClient.PortalItshopRequests.GetSchema();
@@ -94,6 +96,18 @@ export class RequestHistoryService {
     };
   }
 
+  public async getAERoleMemberships(uid:string): Promise<any>{
+    const factory = new V2ApiClientMethodFactory();
+    const method = factory.portal_person_rolememberships_AERole_get(uid);
+    const response = await this.config.apiClient.processRequest<any>(method);
+    console.log('response is',response);
+    return response;
+
+  }
+
+
+  
+
   public async getArchivedRequests(
     userUid: string,
     recipientId: string
@@ -132,12 +146,14 @@ export class RequestHistoryService {
   //       }
   //       return new MethodDefinition(method);
   //     }
-  //   }
+  //   } 
   // }
 
   public async getFilterOptions(userUid: string, filterPresets: { [name: string]: string } = {}): Promise<DataSourceToolbarFilter[]> {
+    console.log('filter presets are',filterPresets);
     return (await this.getDataModel(userUid)).Filters.map((option: DataSourceToolbarFilter) => {
-      option.InitialValue = filterPresets[option.Name];
+      console.log('INSIDE SERVICE OPTION.NAME IS',option.Name,filterPresets[option.Name]);
+      option.InitialValue = filterPresets[option.Name]; 
       return option;
     });
   }
@@ -146,6 +162,14 @@ export class RequestHistoryService {
     return this.qerClient.client.portal_itshop_requests_datamodel_get({ UID_Person: userUid });
   }
 
+  public getGroupInfo(parameters: CollectionLoadParameters = {}): Promise<GroupInfoData> {
+    // remove groupFilter from parameters
+    const { withProperties, groupFilter, search, OrderBy, ...paramsWithoutGroupFilter } = parameters;
+    return this.qerClient.client.portal_itshop_requests_get({
+      ...paramsWithoutGroupFilter,
+      ...{ withcount: true, filter: parameters.groupFilter },
+    });
+  }
   public async prolongate(pwo: PortalItshopRequests, input: ProlongationInput): Promise<void> {
     return this.qerClient.client.portal_itshop_prolongate_post(this.getUidPwo(pwo), input);
   }

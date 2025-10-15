@@ -63,7 +63,7 @@ export class IdentitySelectComponent implements OnChanges {
         this.options = undefined;
       }
     }
-
+    console.log(this.options);
     if (changes.preselectedEntity) {
       this.selectedId = this.getId(this.preselectedEntity);
       this.control.setValue(this.selectedId, { emitEvent: false });

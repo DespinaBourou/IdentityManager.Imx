@@ -122,6 +122,7 @@ export class SqlWizardComponent implements OnInit, OnChanges, AfterViewInit {
       if (!svc) {
         svc = this.apiSvc;
       }
+      console.log(svc,this.tableName,this.expression);
       const viewSettings = new SqlViewSettings(svc, this.tableName, this.expression);
       // first prepare, then assign to local property
       await viewSettings.root.prepare();

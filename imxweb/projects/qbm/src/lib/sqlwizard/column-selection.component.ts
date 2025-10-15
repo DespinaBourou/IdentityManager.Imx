@@ -116,7 +116,9 @@ export class ColumnSelectionComponent implements OnInit, OnChanges {
 
         if (tableName) {
 
+            console.log(tableName,this.node.viewSettings);
             this.columns = await this.svc.getColumns(this.node.viewSettings, tableName);
+            console.log(this.columns);
             this.options = [];
             for (const col of this.columns) {
                 this.options.push({

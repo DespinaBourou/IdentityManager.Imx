@@ -161,6 +161,8 @@ export { ExtComponent } from './lib/ext/ext.component';
 export { ExtDirective } from './lib/ext/ext.directive';
 export { ExtModule } from './lib/ext/ext.module';
 export { ExtService } from './lib/ext/ext.service';
+export {FilterWizardService} from './lib/data-source-toolbar/filter-wizard/filter-wizard.service';
+
 export { IExtension } from './lib/ext/extension';
 export { FilterTileComponent } from './lib/filter-tile/filter-tile.component';
 export { FkCandidatesComponent } from './lib/fk-advanced-picker/fk-candidates/fk-candidates.component';

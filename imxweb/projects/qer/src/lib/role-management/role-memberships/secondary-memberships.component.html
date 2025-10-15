@@ -51,11 +51,11 @@
   <div eui-sidesheet-actions *ngIf="canEdit">
     <imx-selected-elements [selectedElements]="selectedEntities"></imx-selected-elements>
     <div class="imx-menu-spacer"></div>
-    <button data-imx-identifier="roles-secondary-memberships-remove-button" mat-stroked-button color="warn" [disabled]="!canDeleteAllSelected()" (click)="onDeleteMemberships()">
+    <button *ngIf="forrequestremovebuttons" data-imx-identifier="roles-secondary-memberships-remove-button" mat-stroked-button color="warn" [disabled]="!canDeleteAllSelected()" (click)="onDeleteMemberships()">
       <eui-icon icon="delete"></eui-icon>
       {{ '#LDS#Remove' | translate }}
     </button>
-    <button data-imx-identifier="roles-secondary-memberships-request-button" mat-stroked-button (click)="onSelectIdentities()">
+    <button *ngIf="forrequestremovebuttons" data-imx-identifier="roles-secondary-memberships-request-button" mat-stroked-button (click)="onSelectIdentities()">
       {{ '#LDS#Request memberships' | translate }}
     </button>
   </div>

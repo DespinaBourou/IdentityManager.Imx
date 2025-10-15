@@ -126,7 +126,9 @@ export class AttestationCaseComponent implements OnDestroy, OnInit {
 
     this.parameters = this.case.attestationParameters.map((column) => new BaseReadonlyCdr(column));
 
+    console.log('case is',this.case)
     this.propertyInfo = this.case.propertyInfo;
+    this.propertyInfo = this.propertyInfo.filter(col=>col.column.GetMetadata.name != 'Risk Index')
     this.reportType = this.case.ReportType.value;
 
     this.reportDownload = this.attestationCasesService.getReportDownloadOptions(this.case);

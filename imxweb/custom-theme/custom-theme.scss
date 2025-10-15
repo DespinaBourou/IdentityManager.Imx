@@ -40,7 +40,7 @@ $theme: mat.define-light-theme(
   )
 );
 // Rename the $theme-name variable to your theme's name. (e.g.space-theme)
-$theme-name: 'custom-theme';
+$theme-name: 'custom-test-new';
 
 @include theme.theme($theme-name, $theme);
 @include imx-theme.theme($theme-name, $theme);

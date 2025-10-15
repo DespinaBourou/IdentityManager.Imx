@@ -1,0 +1,8 @@
+{
+  "qer-app-portal": [
+    {
+      "Container": "ex2-plugin",
+      "Name": "Ex2PluginModule"
+    }
+  ]
+}

@@ -2049,6 +2049,41 @@
           }
         }
       }
+    },
+    "ex2-plugin": {
+      "projectType": "library",
+      "root": "projects/ex2-plugin",
+      "sourceRoot": "projects/ex2-plugin/src",
+      "prefix": "imx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ex2-plugin/ng-package.json",
+            "tsConfig": "projects/ex2-plugin/tsconfig.lib.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ex2-plugin/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ex2-plugin/tsconfig.lib.json"
+            },
+            "dynamic":{
+              "project": "projects/ex2-plugin/ng-package.dynamic.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ex2-plugin/src/test.ts",
+            "tsConfig": "projects/ex2-plugin/tsconfig.spec.json",
+            "karmaConfig": "projects/ex2-plugin/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "cli": {

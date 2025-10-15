@@ -48,6 +48,10 @@ import { DateFormat } from 'imx-qbm-dbts';
   styleUrls: ['./edit-date.component.scss'],
 })
 export class EditDateComponent implements CdrEditor, OnDestroy {
+
+  public nextYear: Date;            // current date/time
+    
+  
   /**
    * The form control associated with the editor.
    */
@@ -81,6 +85,8 @@ export class EditDateComponent implements CdrEditor, OnDestroy {
    */
   private errorCount = 0;
 
+  public isExitDate = false;
+
   /**
    * Determines, if a time control should be added.
    */
@@ -91,7 +97,11 @@ export class EditDateComponent implements CdrEditor, OnDestroy {
     return dateFormat === DateFormat.DateTime || dateFormat === DateFormat.UtcDateTime;
   }
 
-  public constructor(private readonly errorHandler: ErrorHandler, private logger: ClassloggerService) {}
+  public constructor(private readonly errorHandler: ErrorHandler, private logger: ClassloggerService) {
+    const today = new Date();   
+    this.nextYear = new Date(today);       // clone the date
+    this.nextYear.setFullYear(today.getFullYear() + 1);
+  }
 
   /**
    * Unsubscribes all events, after the 'OnDestroy' hook is triggered.
@@ -108,7 +118,13 @@ export class EditDateComponent implements CdrEditor, OnDestroy {
   public bind(cdref: ColumnDependentReference): void {
     if (cdref && cdref.column) {
       this.columnContainer.init(cdref);
-
+      
+      if (cdref.column.ColumnName=='ExitDate'){
+        this.isExitDate=true
+      }
+      console.log('min and max are',this.columnContainer?.valueConstraint?.MinValue,this.columnContainer?.valueConstraint?.MaxValue)
+      console.log(cdref.column.GetMetadata().GetDateFormat());
+      console.log(cdref.column.ColumnName);
       this.resetControlValue();
 
       if (cdref.minlengthSubject) {
@@ -124,6 +140,8 @@ export class EditDateComponent implements CdrEditor, OnDestroy {
       // bind to entity change event
       this.subscribers.push(
         this.columnContainer.subscribe(() => {
+          
+
           if (!this.isWriting) {
             this.logger.trace(this, 'Control set to new value');
             this.resetControlValue();

@@ -31,10 +31,20 @@ import { UserConfig, ProjectConfig, QerProjectConfig } from 'imx-api-qer';
 import { UserModelService } from '../../user/user-model.service';
 import { PendingItemsType } from '../../user/pending-items-type.interface';
 import { ProjectConfigurationService } from '../../project-configuration/project-configuration.service';
-import { imx_SessionService, SystemInfoService } from 'qbm';
+import { AppConfigService, imx_SessionService, SystemInfoService } from 'qbm';
 import { SystemInfo } from 'imx-api-qbm';
 import { DashboardService } from './dashboard.service';
+import { MethodDescriptor, TimeZoneInfo } from 'imx-qbm-dbts';
 
+interface configparam{
+  isInDepartment: boolean;
+  IsConfigParamEnabled: boolean;
+  DisplayedMessage: string;
+}
+interface fullName{
+  FirstName: string;
+  LastName: string;
+}
 @Component({
   templateUrl: './start.component.html',
   selector: 'imx-start',
@@ -47,6 +57,11 @@ export class StartComponent implements OnInit {
   public systemInfo: SystemInfo;
   public viewReady: boolean;
   public userUid: string;
+  firstName: string;
+  lastName: string;
+  isindepartment: boolean;
+  isenabled: boolean;
+  messagedisplayed: string;
 
   constructor(
     public readonly router: Router,
@@ -55,7 +70,8 @@ export class StartComponent implements OnInit {
     private readonly systemInfoService: SystemInfoService,
     private readonly sessionService: imx_SessionService,
     private readonly detectRef: ChangeDetectorRef,
-    private readonly projectConfigurationService: ProjectConfigurationService
+    private readonly projectConfigurationService: ProjectConfigurationService,
+    private readonly config: AppConfigService
   ) {}
 
   public async ngOnInit(): Promise<void> {
@@ -70,6 +86,9 @@ export class StartComponent implements OnInit {
       this.projectConfig = await this.projectConfigurationService.getConfig();
       this.systemInfo = await this.systemInfoService.get();
       this.userUid = (await this.sessionService.getSessionState()).UserUid;
+      this.FirstNameLastName();
+      this.ConfigParamMessage();
+     
     } finally {
       busy.endBusy();
     }
@@ -78,6 +97,14 @@ export class StartComponent implements OnInit {
   public ShowPasswordTile(): boolean {
     return this.userConfig?.ShowPasswordTile;
   }
+
+  public GoToCCCSupport(): void{
+    this.router.navigate(['support-page']);
+  }
+
+  // public GoToCCCPersonComp(): void{
+  //   this.router.navigate(['CCCPerson']);
+  // }
 
   public ShowPasswordMgmtTile(): boolean {
     return this.projectConfig?.PasswordConfig.VI_MyData_MyPassword_Visibility && !!this.projectConfig?.PasswordConfig.PasswordMgmtUrl;
@@ -161,4 +188,49 @@ export class StartComponent implements OnInit {
     // Starting a new request is only allowed when the session has an identity and the ITShop(Requests) feature is enabled
     return this.userConfig?.IsITShopEnabled && this.userUid && this.systemInfo.PreProps.includes('ITSHOP');
   }
+
+
+  public async FirstNameLastName(){
+    let nameObject = await this.config.apiClient.processRequest<fullName>(this.GetFirstNameLastName());
+    this.firstName=nameObject.FirstName;
+    this.lastName=nameObject.LastName;
+  }
+  private GetFirstNameLastName(): MethodDescriptor<void>{
+    return{
+      path: `/portal/ex1/nameofloggedinuser`,
+      parameters: [],
+      method: 'GET',
+      headers: {
+        'imx-timezone': TimeZoneInfo.get()
+      },
+      credentials: 'include',
+      observe: 'response',
+      responseType: 'json'
+    };
+  }
+
+  public async ConfigParamMessage(){
+    let configparamObject = await this.config.apiClient.processRequest<configparam>(this.GetConfigParamMessage());
+    this.isindepartment=configparamObject.isInDepartment;
+    this.isenabled=configparamObject.IsConfigParamEnabled;
+    this.messagedisplayed=configparamObject.DisplayedMessage;
+    console.log(this.isenabled);
+    console.log(this.isindepartment);
+    console.log(this.messagedisplayed);
+  }
+
+  private GetConfigParamMessage(): MethodDescriptor<void>{
+    return{
+      path: `/portal/ex2/configparam`,
+      parameters: [],
+      method: 'GET',
+      headers: {
+        'imx-timezone': TimeZoneInfo.get()
+      },
+      credentials: 'include',
+      observe: 'response',
+      responseType: 'json'
+    };
+  }
+
 }

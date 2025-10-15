@@ -44,6 +44,7 @@ export class MenuService {
 
   public addMenuFactories(...factories: MenuFactory[]): void {
     this.factories.push(...factories);
+    //console.log('this.factories is', this.factories);
   }
 
   public clearFactories(): void {
@@ -70,7 +71,7 @@ export class MenuService {
           menu.items = this.sortMenuItems(menu.items);
         }
       });
-
+      //console.log('menuitemsis',menuItems);
     return await this.getNavigationItems(menuItems);
   }
 

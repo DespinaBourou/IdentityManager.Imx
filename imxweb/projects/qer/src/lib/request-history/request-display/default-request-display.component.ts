@@ -66,7 +66,9 @@ export class DefaultRequestDisplayComponent implements RequestDisplayInterface {
         marker: { start: '"%', end: '%"' },
         getParameterValue: columnName => {
           try {
+            console.log(this._pwo.GetEntity().GetColumn(columnName).GetDisplayValue());
             return this._pwo.GetEntity().GetColumn(columnName).GetDisplayValue();
+            
           } catch {
             // parameter values may be embedded directly
             return columnName;

@@ -1,0 +1,22 @@
+
+<mat-form-field appearance="outline" class="inputbox" style="width:240px" >
+    <mat-label> Custom Property 01</mat-label>
+    <input placeholder="Custom Propery 01" type="text" matInput [formControl]="customproperty01">
+</mat-form-field>
+
+<eui-date-picker [dateControl]="exitdate" 
+placeholder="Exit Date" label="Exit Date" [allowTextInput]="false" [useClearIcon]="true" class="euidatepicker" [min]="entrydate" ></eui-date-picker>
+
+<button mat-flat-button color="primary" style="width:100px" (click)="updateEmployeeData()"> Submit </button>
+ <!-- <mat-spinner *ngIf="loading"></mat-spinner> -->
+
+    <!-- <eui-date-picker [dateControl]="exitdate" 
+    placeholder="Exit Date" label="Exit Date" [allowTextInput]="false" [useClearIcon]="true"></eui-date-picker> -->
+
+<!-- 
+<mat-form-field appearance="outline" class="inputbox" >
+    <mat-label> Exit Date</mat-label>
+<input [matDatepicker]="picker" placeholder="Exit Date" type="datetime" matInput>
+<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+<mat-datepicker #picker></mat-datepicker> 
+</mat-form-field>-->

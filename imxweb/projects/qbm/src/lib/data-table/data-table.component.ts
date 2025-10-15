@@ -365,6 +365,7 @@ export class DataTableComponent<T> implements OnInit, OnChanges, AfterViewInit, 
    * Listens for changes of data table inputs e.g. checks it the datasource has changed.
    */
   public async ngOnChanges(changes: SimpleChanges): Promise<void> {
+    console.log('INSIDE ONCHANGES OF DATATABLE')
     if (changes['mode'] && changes['mode'].currentValue) {
       if (this.mode === 'auto') {
         if (this.dst.dataSourceChanged && this.columnDefs) {
@@ -374,6 +375,7 @@ export class DataTableComponent<T> implements OnInit, OnChanges, AfterViewInit, 
     }
 
     if (changes['dst'] && changes['dst'].currentValue) {
+      console.log('CHANGES CAUSED BY DST INSIDE DATA TABLE');
       this.subscriptions.push(
         this.dst.settingsChanged.subscribe(async (value: DataSourceToolbarSettings) => {
           if (this.dst.dataSourceHasChanged) {

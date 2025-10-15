@@ -83,6 +83,7 @@ export class CdrRegistryService implements CdrEditorProviderRegistry {
     this.logger.debug(this, `Registering '${this.className(provider)}' as
     column dependent reference editor provider #${this.registeredProviders.length + 1}.`);
     this.registeredProviders.push(provider);
+    console.log('registered providers are',this.registeredProviders)
   }
 
   /**
@@ -101,12 +102,14 @@ export class CdrRegistryService implements CdrEditorProviderRegistry {
    * @throws {Error} Throws an error if the given column dependent reference is null or undefined.
    */
   public createEditor(parent: ViewContainerRef, cdref: ColumnDependentReference): ComponentRef<CdrEditor> {
+    console.log('reg provs',this.registeredProviders);
     if (cdref == null) {
       throw new Error('The cdref must not be null or undefined.');
     }
 
     this.logger.debug(this, `Creating editor for column dependent reference '${this.className(cdref)}'.`);
     for (const provider of this.registeredProviders.slice().reverse()) {
+      console.log(`Asking editor provider '${this.className(provider)}' to create editor for '${this.className(cdref)}'`);
       this.logger.debug(this, `Asking editor provider '${this.className(provider)}' to create editor for '${this.className(cdref)}'`);
 
       try {
@@ -126,7 +129,7 @@ export class CdrRegistryService implements CdrEditorProviderRegistry {
         this.errorHandler.handleError(e);
       }
     }
-
+    console.log('registered providers didnt work');
     this.logger.debug(this, `None of the providers could create an editor for '${this.className(cdref)}' -> returning default editor.`);
     try {
       const component = parent.createComponent(this.componentFactoryResolver.resolveComponentFactory(EditDefaultComponent));

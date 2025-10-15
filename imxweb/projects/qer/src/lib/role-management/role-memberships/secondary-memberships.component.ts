@@ -48,6 +48,7 @@ import { RemoveMembershipComponent } from './remove-membership.component';
 export class SecondaryMembershipsComponent implements OnInit {
   public dstSettings: DataSourceToolbarSettings;
   public navigationState: CollectionLoadParameters = {};
+  public forrequestremovebuttons: boolean = true;
   public entitySchema: EntitySchema;
   public DisplayColumns = DisplayColumns;
   public displayColumns: IClientProperty[];
@@ -73,6 +74,11 @@ export class SecondaryMembershipsComponent implements OnInit {
     private readonly confirmation: ConfirmationService,
     private readonly snackbar: SnackBarService
   ) {
+    if(roleService.entity.TypeName == 'Department' || roleService.entity.TypeName == 'ProfitCenter'){
+      console.log('WILL SET TO FALSE INSIDE SECMEM');
+      this.forrequestremovebuttons = false;
+    };
+    console.log('INSIDE SECONDARY MEMEBERSHIPS', this.forrequestremovebuttons);
     this.canEdit = roleService.canEdit;
     this.secondaryAlert = this.canEdit
       ? '#LDS#Here you can manage the memberships of the object. You can request and remove memberships and view the assignment analysis for each membership.'

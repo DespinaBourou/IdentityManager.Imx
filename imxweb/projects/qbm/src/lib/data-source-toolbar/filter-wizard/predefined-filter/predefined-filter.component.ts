@@ -138,12 +138,14 @@ export class PredefinedFilterComponent implements OnInit, AfterViewInit, OnDestr
 
     this.subscriptions.push(
       this.filterService.applyFiltersEvent.subscribe(() => {
+        console.log('INSIDE SUBSCRIPTION OF APPLYFILTERSEVENT INSIDE PREDEFINEDFILTER');
         this.applyFilters();
       })
     );
 
     this.subscriptions.push(
       this.filterService.clearFiltersEvent.subscribe(() => {
+        console.log('INSIDE SUBSCRIPTION OF CLEARFILTERSEVENT INSIDE PREDEFINEDFILTER');
         this.clearFilters();
       })
     );
@@ -287,6 +289,7 @@ export class PredefinedFilterComponent implements OnInit, AfterViewInit, OnDestr
    * Clears all selected filter values and updates and emits the new navigationState
    */
   private clearFilters(emit = true): void {
+    console.log('INSIDE CLEARFILTERS OF PREDEFINED FILTERS');
     this.filters?.forEach((filter) => (filter.CurrentValue = undefined));
     const containsCustomFilters = this.selectedFiltersContainsCustomFilters();
     if (containsCustomFilters) {
@@ -321,6 +324,7 @@ export class PredefinedFilterComponent implements OnInit, AfterViewInit, OnDestr
    * If the datasource is local, will apply the filters here and emit a settingsChanged signal instead of a navigationStateChanged
    */
   private updateNavigateStateWithFilters(emit = true): void {
+    console.log('INSIDE PREDEFINEDFILTER UPDATENAVIGATESTATEWFILTERS ');
     this.selectedFilters = Object.create(this.internalSelectedFilters);
     this.filters?.forEach((filter) => {
       if (filter.CurrentValue) {

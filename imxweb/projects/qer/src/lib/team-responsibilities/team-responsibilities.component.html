@@ -5,8 +5,10 @@
 <mat-card class="imx-team-responsibilities-table-card">
   <imx-data-source-toolbar
     #dst
+    
     [options]="['filter']"
     [settings]="dstSettings"
+   
     [busyService]="busyService"
     (search)="getData({ search: $event })"
     (navigationStateChanged)="getData($event)"
@@ -50,5 +52,5 @@
       </ng-template>
     </imx-data-table-generic-column> -->
   </imx-data-table>
-  <imx-data-source-paginator data-imx-identifier="view-team-responsibilities-paginator" [dst]="dst"> </imx-data-source-paginator>
+  <imx-data-source-paginator [ptiletomenu]="teamTileToMenu" data-imx-identifier="view-team-responsibilities-paginator" [dst]="dst"> </imx-data-source-paginator>
 </mat-card>

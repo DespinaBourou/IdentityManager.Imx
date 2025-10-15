@@ -441,6 +441,7 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
   }
 
   private async viewIdentity(identity: PortalAdminPerson | PortalPersonReports): Promise<void> {
+    // console.log(this.projectConfig,identity)
     await this.sideSheet
       .open(IdentitySidesheetComponent, {
         title: await this.translate.get('#LDS#Heading Edit Identity').toPromise(),

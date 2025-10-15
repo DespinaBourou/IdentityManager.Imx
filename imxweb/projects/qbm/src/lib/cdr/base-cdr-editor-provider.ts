@@ -48,8 +48,9 @@ export abstract class BaseCdrEditorProvider<T extends CdrEditor> implements CdrE
     if (!this.accept(cdref)) {
       return null;
     }
-
+    console.log('tctor',this.tCtor);
     const view = parent.createComponent(this.componentFactoryResolver.resolveComponentFactory(this.tCtor));
+    console.log('editor ie view.instance is',view.instance);
     this.configure(view.instance, cdref);
 
     return view;

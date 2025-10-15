@@ -1,0 +1,17 @@
+ .filtersearch{
+    
+        border:none !important;
+    
+}
+
+.inputbox{
+  
+    margin-top:20px;
+}
+
+.mat-row:hover{
+    background-color: peachpuff;
+}
+table{
+    table-layout: fixed;
+}

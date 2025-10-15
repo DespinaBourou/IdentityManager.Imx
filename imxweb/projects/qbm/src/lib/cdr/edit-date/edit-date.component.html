@@ -3,7 +3,7 @@
   [display]="columnContainer?.display"
   [isReadonly]="!columnContainer?.canEdit"
   [min]="columnContainer?.valueConstraint?.MinValue"
-  [max]="columnContainer?.valueConstraint?.MaxValue"
+  [max]="isExitDate ? nextYear : columnContainer?.valueConstraint?.MaxValue"
   [isValueRequired]="columnContainer?.isValueRequired"
   [withTime]="withTime"
   [validateOnlyOnChange]="validateOnlyOnChange"

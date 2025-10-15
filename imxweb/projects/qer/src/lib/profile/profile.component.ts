@@ -142,7 +142,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
       const projectConfig = await this.projectConfig.getConfig();
       this.canManagePasswordQuestions = projectConfig.PasswordConfig.VI_MyData_MyPassword_Visibility;
-      this.useProfileCulture = projectConfig.PersonConfig.UseProfileCulture;
+      this.useProfileCulture = projectConfig.PersonConfig.UseProfileCulture; 
 
       this.canShowEntitlementsHyperview = await this.permissions.isPersonAdmin() || await this.permissions.isPersonManager();
 
